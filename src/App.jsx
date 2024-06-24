@@ -4,10 +4,11 @@ import Chats from "./chat/Chats";
 import List from "./list/list";
 import Detail from "./details/detail";
 import Login from "./login/Login";
-// import Notification from "./notification/notification";
+import { ToastContainer, toast } from 'react-toastify';
+ import Notification from "./notification/notification";
 const App = () => {
 
-const user= true  ;
+const user= false ;
 
   return (
     <div className='container flex '>
@@ -18,7 +19,7 @@ const user= true  ;
            <Detail/>
            </>
            ) :(<Login/>)}
-           {/* <Notification/> */}
+           <Notification/>
     </div>
   
   )
