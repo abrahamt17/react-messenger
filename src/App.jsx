@@ -9,24 +9,32 @@ import { ToastContainer, toast } from 'react-toastify';
  import Notification from "./notification/notification";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
+import { useUserStore } from "./lib/userStore";
+
+
+
 const App = () => {
+
+const {currentUser ,isLoading, fetchUserInfo }=useUserStore
 
 useEffect(()=>{
   const unSub= onAuthStateChanged(auth, (user)=>{
-    console.log(user.uid);
+    fetchUserInfo(user.uid);
+
   });
   return ()=>{
     unSub();
   }
-}, []);
+}, [fetchUserInfo]);
+console.log(currentUser);
 
+if (isLoading) return <div className="loading">Loading...</div>
 
-const user= false ;
 
   return (
     <div className='container flex '>
       
-        { user ? ( 
+        {currentUser? ( 
         <> <List/>
           <Chats/>
            <Detail/>
