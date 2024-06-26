@@ -11,7 +11,8 @@ const upload = async (file) => {
       "state_changed",
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.error("Upload is " + progress + "% done");
+        console.count("Upload is " + progress + "% done");
+    
       },
       (error) => {
         console.error("Upload error:", error);
