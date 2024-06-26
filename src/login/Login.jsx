@@ -72,8 +72,8 @@ const Login = () => {
   const handleLogin = async (e )=> {  
     e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const { email, password } = Object.fromEntries(formData.entries());
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData.entries());
  try{
   await signInWithEmailAndPassword(auth, email, password)
 
