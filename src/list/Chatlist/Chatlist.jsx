@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Chatlist.css';
 import AddUser from './addUser/addUser';
+import { useUserStore } from '../../lib/userStore';
+import { onSnapshot } from 'firebase/firestore';
+import Chats from '../../chat/Chats';
+import { doc } from 'firebase/firestore';
+import { db } from '../../lib/firebase';
+
+
 const Chatlist=()=> {
 const [adMode, setAddMode]= useState(false);
+const [Chats, setChats]= useState([]);
 
+const{currentUser}= useUserStore();
+
+useEffect(()=>{
+  const unSub=onSnapshot(doc(db, "userchats", currentUser.id), (doc)=>{
+    setChats(doc.data());
+  })
+  return ()=>{
+    unSub();
+  }
+}, [currentUser.id]);
+console.log(Chats);
 
 
   return (
@@ -14,30 +33,27 @@ const [adMode, setAddMode]= useState(false);
 <div className="searchBar">
 <img src="./search.png"  alt="" />
 <input type='text' className=''  placeholder='search'/></div>
+<img
+ className='add' 
+src={adMode?  './minus.png' : "./plus.png"} 
+alt='' 
+onClick={() =>setAddMode((prev)=> !prev)}/>
 
-<img className='add' src={adMode?  './minus.png' : "./plus.png"} alt='' onClick={() =>setAddMode((prev)=> !prev)}/>
+
 </div>
-<div className='item'>
+{Chats.map((chat)=>{
+ 
+ <div className='item' key={chat.chatId}>
     <img src="./avatar.png" alt="" />
      <div className='texts'>
-    <span>Avram Ab</span>
+    <span>{chat.username }</span>
     <h1>Hellooo</h1>
      </div>
   </div>
-  <div className='item'>
-    <img src="./avatar.png" alt="" />
-     <div className='texts'>
-    <span>Avram Ab</span>
-    <h1>Hellooo</h1>
-     </div>
-  </div>
-  <div className='item'>
-    <img src="./avatar.png" alt="" />
-     <div className='texts'>
-    <span>Avram Ab</span>
-    <h1>Hellooo</h1>
-     </div>
-  </div> 
+
+})}
+
+ 
   
   
 </div>
