@@ -3,7 +3,7 @@ import './Chatlist.css';
 import AddUser from './addUser/addUser';
 import { useUserStore } from '../../lib/userStore';
 import { onSnapshot } from 'firebase/firestore';
-import Chats from '../../chat/Chats';
+// import Chats from '../../chat/Chats';
 import { doc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
